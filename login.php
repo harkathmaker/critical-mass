@@ -7,9 +7,6 @@
 
 <body>
 
-<div id="container">
-<?php include("menu.php"); ?>
-
 <form name="input" action="login-process.php" method="post">
 <p>Email: <input type="text" name="email" /></p>
 <p>Password: <input type="password" name="password" /></p>

@@ -6,6 +6,10 @@ table.profile td {
 	min-width: 100px;
 	background-color: #2299ff;
 }
+table.nav td {
+	padding-left: 20px;
+	padding-right: 20px;
+}
 table.messages {
 	min-width: 600px;
 	max-width: 900px;

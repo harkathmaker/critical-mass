@@ -1,12 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html>
-<head>
-<title>Event Invitations</title>
-<?php include("header.php"); ?>
-</head>
-
-<body>
 <?
+include("header.php");
+
+print_header("Event Invitations");
+
 include("nav.php");
 
 $eid = $_POST['eid'];
@@ -14,15 +10,29 @@ $tok = strtok($_POST['invitees'],", ");
 
 echo "Input: $_POST[invitees]<br />";
 
+$con = connectToHost();
+$db = selectDB($con);
+
+$event_info = getEventInfo($eid);
+
+if(isset($_SESSION['user'])) {
+	// Get the user's name
+	$user_info = getUserInfo($_SESSION['user']);
+	$name = $user_info['DisplayName'];
+} else {
+	$name = "Someone";
+}
+
 while($tok !== false) {
 	if(!filter_var($tok, FILTER_VALIDATE_EMAIL)) {
 		echo "<p>Address $tok was invalid.</p>";
 	} else {
-		$subject = "Invitation to SWRM Event";
+		$subject = "Invitation to Critical Mass Event";
 		$body = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional = //EN\">
 		<html>
 		<body>
-		Hello there!<br /><br />You have been invited to the event $eid. Click <a href=\"harkath.com/swrm/event-page.php?id=$eid\">here</a> to view the event details.<br /><br />
+		Hello there!<br /><br />$name has invited you to <a href=\"harkath.com/swrm/event-page.php?id=$eid\">$event_info[Name]</a>.<br /><br />
+		$_POST[note]<br /><br />
 		Thanks,<br />
 		The SWRM Team
 		</body>
@@ -39,7 +49,6 @@ while($tok !== false) {
 	$tok = strtok(", ");
 }
 
-?>
+print_footer();
 
-</body>
-</html>
+?>

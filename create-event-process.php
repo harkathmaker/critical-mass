@@ -1,33 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html>
-<head>
-<title>Creating Event...</title>
-<?php include("header.php"); ?>
-
-</head>
-
-<body>
-
-<div id="container">
-
 <?
+include("header.php");
+print_header("Creating Event...");
 
 // TEMP
 //echo "User: ".$_POST['email']."<br />";
 //echo "Password: ".$_POST['password']."<br />";
 //echo "Gender: ".$_POST['sex']."<br />";
 //
-
-echo $_POST['title']."<br />";
-echo $_POST['ifstatement']."<br />";
-echo $_POST['thenstatement']."<br />";
-echo $_POST['description']."<br />";
-echo $_POST['visibility']."<br />";
-echo $_POST['duedate']."<br />";
-echo $_POST['eventdate']."<br />";
-echo $_POST['location']."<br />";
-echo $_POST['triggernumber']."<br />";
-echo $_SESSION['user']."<br />";
 
 if(!isset($_POST['title'])
     || !isset($_POST['ifstatement'])
@@ -40,7 +19,7 @@ if(!isset($_POST['title'])
 	|| !isset($_POST['event-year'])
 	|| !isset($_POST['event-month'])
 	|| !isset($_POST['event-day'])
-	|| !isset($_POST['location'])
+//	|| !isset($_POST['location'])
 //	|| !isset($_SESSION['user'])
     || !filter_input(INPUT_POST, 'triggernumber', FILTER_VALIDATE_INT)
 	|| (!isset($_SESSION['user']) && !isset($_POST['email']))){
@@ -55,6 +34,7 @@ $db_selected = selectDB($con);
 
 $duedate = $_POST['due-year'].'-'.$_POST['due-month'].'-'.$_POST['due-day'];
 $eventdate = $_POST['event-year'].'-'.$_POST['event-month'].'-'.$_POST['event-day'];
+$location = ($_POST['location'] != '' ? "'".mysql_escape_string($_POST['location'])."'" : "NULL");
 
 if(isset($_SESSION['user'])) {
 	$creator_field = "Creator";
@@ -63,7 +43,7 @@ if(isset($_SESSION['user'])) {
 	$creator_field = "ContactInfo";
 	$creator = "'$_POST[email]'";
 }
-$sql = sprintf("INSERT INTO Events (Name,IfStatement,ThenStatement,EventDate,DueDate,Description,TriggerNumber,Location,Visibility,%s) VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s',%s)",
+$sql = sprintf("INSERT INTO Events (Name,IfStatement,ThenStatement,EventDate,DueDate,Description,TriggerNumber,Location,Visibility,%s) VALUES('%s','%s','%s','%s','%s','%s','%s',%s,'%s',%s)",
 		$creator_field,
 		mysql_escape_string($_POST['title']),
 		mysql_escape_string($_POST['ifstatement']),
@@ -72,7 +52,7 @@ $sql = sprintf("INSERT INTO Events (Name,IfStatement,ThenStatement,EventDate,Due
 		mysql_escape_string($duedate),
 		mysql_escape_string($_POST['description']),
 		mysql_escape_string($_POST['triggernumber']),
-		mysql_escape_string($_POST['location']),
+		$location,
 		mysql_escape_string($_POST['visibility']),
 		$creator);
 
@@ -96,8 +76,6 @@ $row = mysql_fetch_array($result);
 mysql_close($con);
 echo 'Event created successfully!<br /><a href="create-event.php">Home</a>';
 echo '<script>location.href="event-page.php?id='.$row['EID'].'"</script>';
+
+print_footer();
 ?>
-
-</body>
-
-</html>

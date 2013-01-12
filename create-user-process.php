@@ -1,16 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html>
-<head>
-<title>Create New Player</title>
-<?php include("header.php"); ?>
-</head>
-
-<body>
-
-<div id="container">
-<!--<?php #include("menu.php"); ?>-->
-
 <?
+include("header.php");
+print_header("Create New User");
 
 // TEMP
 echo "User: ".$_POST['email']."<br />";
@@ -40,9 +30,32 @@ if (!mysql_query($sql,$con)) {
 }
 
 mysql_close($con);
-echo 'Connection successful.<br /><a href="create-user.php">Home</a>';
-?>
 
+$to = $_POST['email'];
+$body = "Hi $displayname,\n\nSomeone has registered an account at <a href=Critical Mass with this email address.\n\nYour password is: $_POST[password]\n\nThanks,\nThe SWRM Team";
+
+$subject = "Welcome to Critical Mass";
+$body = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional = //EN\">
+<html>
+<body>
+Hi $displayname,
+<br /><br />
+Someone has registered an account at <a href=\"http://harkath.com/swrm/events.php\">Critical Mass</a> with this email address.
+<br /><br />Your password is: $_POST[password]
+<br /><br />Thanks,<br />The SWRM Team
 </body>
+</html>";
+$headers  = 'MIME-Version: 1.0' . "\r\n";
+$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+$headers .= "From: support@harkath.com";
+if (mail($to, $subject, $body, $headers)) {
+	echo "<p>Message successfully sent to $to.</p>";
+} else {
+	echo "<p>Message delivery to $to failed.</p>";
+}
 
-</html>
+echo 'Created new user successfully!<br /><a href="create-user.php">Home</a>';
+echo '<script>location.href="login.php"</script>';
+
+print_footer();
+?>

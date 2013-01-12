@@ -1,13 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html>
-<head>
-<title>Events</title>
-<?php include("header.php"); ?>
-</head>
+<?php
+include("header.php");
+print_header("Events");
 
-<body>
-
-<?php include("nav.php"); ?>
+include("nav.php"); ?>
 
 <br /><br />
 <table border="1">
@@ -32,9 +27,7 @@ while($row = mysql_fetch_array($result)) {
   echo "<tr><td><a href=\"event-page.php?id=$row[EID]\">$row[Name]</a></td><td>$row[IfStatement]</td><td>$row[ThenStatement]</td><td>$row[TriggerNumber]</td></tr>";
   $i += 1;
 }
+
+echo '</table>';
+print_footer();
 ?>
-</table>
-
-</body>
-
-</html>

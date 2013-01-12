@@ -85,7 +85,7 @@ while($row = mysql_fetch_array($result))
 mysql_close($con);
  
  
- $subject = "SWRM Password Reset";
+ $subject = "Critical Mass Password Reset";
  $body = "Hi $name,\n\nYou are receiving this email because someone requested that your password be reset.\n\nYour new password is: $newpass\n\nThanks,\nThe SWRM Team";
  $headers = "From: support@harkath.com";
  if (mail($to, $subject, $body, $headers)) {

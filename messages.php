@@ -1,12 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html>
-<head>
-<title>Messages</title>
-<?php include("header.php"); ?>
-</head>
-
-<body>
 <?
+include("header.php");
+print_header("Messages");
+
 include("nav.php");
 
 $MAX_MESSAGES = 50;
@@ -67,6 +62,7 @@ if(isset($_REQUEST['user'])) {
 	echo '</form>';
 	
 } else {
+	// Show the list of message threads
 
 	$query = sprintf("SELECT * FROM Messages WHERE Sender=%s OR Recipient=%s ORDER BY DateSent DESC",$_SESSION['user'],$_SESSION['user']);
 	$result = mysql_query($query);
@@ -88,8 +84,5 @@ if(isset($_REQUEST['user'])) {
 	mysql_close($con);
 }
 
+print_footer();
 ?>
-
-</body>
-
-</html>

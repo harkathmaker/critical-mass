@@ -44,4 +44,6 @@ else
 {
   echo "Invalid file";
 }
+
+print_footer();
 ?>

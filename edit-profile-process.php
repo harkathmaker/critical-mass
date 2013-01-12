@@ -1,15 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html>
-<head>
-<title>Edit User Profile</title>
-<? include("header.php"); ?>
-</head>
-
-<body>
-
-<div id="container">
-
 <?
+include("header.php");
+
+print_header("Edit User Profile");
+
 include("nav.php");
 require_once("error.php");
 require_once("connection.php");
@@ -52,8 +45,5 @@ if (!mysql_query($sql,$con)) {
 	echo '<p>Updated successfully.</p>';
 	echo '<script>location.href="profile.php?user='.$_SESSION['user'].'"</script>';
 }
+print_footer();
 ?>
-
-</body>
-
-</html>

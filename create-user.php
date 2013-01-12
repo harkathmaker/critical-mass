@@ -1,8 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html>
-<head>
-<title>SWRM - Create New User</title>
-<?php include("header.php"); ?>
+<?
+include("header.php");
+print_header("Create New User",true);
+?>
+
 <script type="text/javascript">
 W3CDOM = true;
 function validate() {
@@ -63,14 +63,12 @@ function removeError()
 	this.onchange = null;
 }
 </script>
-</head>
 
-<body>
+<?
+print_footer();
 
-<div id="container">
-<!--<?php include("nav.php"); ?>-->
-
-<!---->
+include("nav.php");
+?>
 
 <form name="input" action="create-user-process.php" onsubmit="return validate()" method="post">
 <p>Email (this will be your username): <input type="text" name="email" /></p>
@@ -128,6 +126,4 @@ for($i=2012;$i>1920;$i--) {
 <input type="submit" value="Create Account" />
 </form> 
 
-</body>
-
-</html>
+<? print_footer(); ?>

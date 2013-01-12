@@ -1,17 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"> 
-<html>
-<head>
-<title>Event</title>
-<?php include("header.php"); ?>
-</head>
-
-<body>
-<?php include("nav.php"); ?>
-
 <?
+include("header.php");
+print_header("Pledging to Event...");
+
+include("nav.php");
 
 $con = connectToHost();
 $db = selectDB($con);
+
+$event_info = getEventInfo($_POST['eid']);
 
 if(isset($_SESSION['user'])) {
 	// Subscribe the registered user to the event
@@ -35,9 +31,24 @@ if(isset($_SESSION['user'])) {
 		// Remove anonymous duplicate
 		$user_info = getUserInfo($_SESSION['user']);
 		$query = sprintf("DELETE FROM AnonAttendees WHERE EventID=%s AND ContactMethod='%s' AND ContactInfo='%s'","$_POST[eid]","EMAIL",$user_info['Email']);
-		$request = mysql_query($query);
-		if($request) {
-			echo "Deleted duplicate.";
+		mysql_query($query);
+		
+		$subject = "You've pledged to join $event_info[Name]";
+		$body = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional = //EN\">
+		<html>
+		<body>
+		Hello $user_info[DisplayName]!<br /><br />You have pledged to the event <a href=\"harkath.com/swrm/event-page.php?id=$_POST[eid]\">$event_info[Name]</a>. You will be notified again when the event has received enough pledges to take place.<br /><br />
+		Thanks,<br />
+		The SWRM Team
+		</body>
+		</html>";
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= "From: support@harkath.com";
+		if (mail($user_info['Email'], $subject, $body, $headers)) {
+			echo "<p>Message successfully sent to $user_info[Email]!</p>";
+		} else {
+			echo "<p>Message delivery to $user_info[Email] failed.</p>";
 		}
 	}
 } else if(isset($_POST['email'])) {
@@ -71,6 +82,24 @@ if(isset($_SESSION['user'])) {
 		if($request) {
 			echo "<p>Pledged anonymously successfully!</p>";
 		}
+		
+		$subject = "You've pledged to join $event_info[Name]";
+		$body = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional = //EN\">
+		<html>
+		<body>
+		Hello there!<br /><br />You have pledged to the event <a href=\"harkath.com/swrm/event-page.php?id=$_POST[eid]\">$event_info[Name]</a>. You will be notified again when the event has received enough pledges to take place.<br /><br />
+		Thanks,<br />
+		The SWRM Team
+		</body>
+		</html>";
+		$headers  = 'MIME-Version: 1.0' . "\r\n";
+		$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+		$headers .= "From: support@harkath.com";
+		if (mail($email, $subject, $body, $headers)) {
+			echo "<p>Message successfully sent to $email!</p>";
+		} else {
+			echo "<p>Message delivery to $email failed.</p>";
+		}
 	}
 } else {
 	// Something went wrong.
@@ -80,8 +109,6 @@ if(isset($_SESSION['user'])) {
 echo '<a href="event-page.php?id='.$_POST['eid'].'">Return to Event Page</a>';
 
 mysql_close($con);
+
+print_footer();
 ?>
-
-</body>
-
-</html>
