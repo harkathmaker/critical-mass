@@ -9,7 +9,16 @@ $db = selectDB($con);
 
 $event_info = getEventInfo($_POST['eid']);
 
-if(isset($_SESSION['user'])) {
+$result = mysql_query("SELECT COUNT(*) AS Num FROM Attendees WHERE EventID=$event_info[EID]");
+$num = mysql_fetch_array($result);
+$result = mysql_query("SELECT COUNT(*) AS Num FROM AnonAttendees WHERE EventID=$event_info[EID]");
+$anonNum = mysql_fetch_array($result);
+$total_count = $num['Num']+$anonNum['Num'];
+
+if($event_info['MaxNumber'] != NULL and $total_count >= $event_info['MaxNumber']) {
+	echo "<h3>Max Guest Amount Reached</h3>
+	<p>Sorry, this event already has the maximum allowed number of pledges!</p>";
+} else if(isset($_SESSION['user'])) {
 	// Subscribe the registered user to the event
 	
 	$query = sprintf("SELECT * FROM Attendees WHERE User=%s AND EventID=%s","$_SESSION[user]","$_POST[eid]");

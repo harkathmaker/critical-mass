@@ -23,3 +23,32 @@ table.messages td {
 	max-width:400px;
 }
 .error {color: rgb(255,15,15); }
+
+div.progressBar { 
+   /*position: relative; /* IE is dumb */
+    display: block;                 
+    float: left;     
+    width: 500px; 
+    height: 16px; 
+    margin: 0 0 2px; 
+    background: #eee; 
+}
+
+div.progressBar div.blue { 
+    /*position: relative; */
+    background: #22f; 
+    height: 16px; 
+    width: 75%; 
+    text-align:right; 
+    display:block;
+    float: left;
+}
+div.progressBar div.red { 
+    /*position: relative; */
+    background: #f00; 
+    height: 16px; 
+    width: 75%; 
+    text-align:right; 
+    display:block;
+    float: left;
+}

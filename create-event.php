@@ -52,7 +52,7 @@ print_year_options(2020,2013);
 
 <?
 if(!isset($_SESSION['user'])) {
-	echo '<p>Email address (all notifications will be sent here): <input type="text" name="email" /></p>';
+	echo '<p>Email address (all notifications will be sent here): <input type="email" name="email" /></p>';
 }
 
 echo '<input type="submit" value="Create Event!" />';

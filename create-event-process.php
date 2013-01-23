@@ -73,6 +73,11 @@ $sql = sprintf("SELECT EID From Events WHERE Name='%s' AND IfStatement='%s' AND 
 $result = mysql_query($sql);
 $row = mysql_fetch_array($result);
 
+$max_num = filter_input(INPUT_POST, 'maxnumber', FILTER_VALIDATE_INT);
+if($max_num != NULL and $max_num != false) {
+	mysql_query("UPDATE Events SET MaxNumber=$max_num WHERE EID=$row[EID]");
+}
+
 mysql_close($con);
 echo 'Event created successfully!<br /><a href="create-event.php">Home</a>';
 echo '<script>location.href="event-page.php?id='.$row['EID'].'"</script>';

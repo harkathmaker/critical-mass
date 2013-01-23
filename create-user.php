@@ -1,5 +1,7 @@
 <?
 include("header.php");
+
+require_once("ui/date.php");
 print_header("Create New User",true);
 ?>
 
@@ -71,58 +73,29 @@ include("nav.php");
 ?>
 
 <form name="input" action="create-user-process.php" onsubmit="return validate()" method="post">
-<p>Email (this will be your username): <input type="text" name="email" /></p>
-<p>Password: <input type="password" name="password" /></p>
-<p>Confirm password: <input type="password" name="confpass" /></p>
-<p>First Name: <input type="text" name="firstname" /></p>
-<p>Last Name: <input type="text" name="lastname" /></p>
-<p><input type="radio" name="sex" value="male" /> Male</p>
-<p><input type="radio" name="sex" value="female" /> Female</p>
+<p><label for="email">Email (this will be your username): </label><input type="email" name="email" id="email" /></p>
+<p><label for="password">Password: </label><input type="password" name="password" id="password" /></p>
+<p><label for="confpass">Confirm password: </label><input type="password" name="confpass" id="confpass" /></p>
+<p><label for="firstname">First Name: </label><input type="text" name="firstname" id="firstname" /></p>
+<p><label for="lastname">Last Name: </label><input type="text" name="lastname" id="lastname" /></p>
+<p><input type="radio" name="sex" value="male" id="male" /><label for="male"> Male</label></p>
+<p><input type="radio" name="sex" value="female" id="female" /><label for="female"> Female</label></p>
 <p>Birthday
 <select name="birth-month">
-  <option value="1">January</option>
-  <option value="2">February</option>
-  <option value="3">March</option>
-  <option value="4">April</option>
-  <option value="5">May</option>
-  <option value="6">June</option>
-  <option value="7">July</option>
-  <option value="8">August</option>
-  <option value="9">September</option>
-  <option value="10">October</option>
-  <option value="11">November</option>
-  <option value="12">December</option>
+<?
+	print_month_options();
+?>
 </select>
 <select name="birth-day">
 <?
-for($i=1;$i<=31;$i++) {
-	echo "<option value=\"$i\">$i</option>";
-}
+print_day_options();
 ?>
 </select>
 <select name="birth-year">
 <?
-for($i=2012;$i>1920;$i--) {
-	echo "<option value=\"$i\">$i</option>";
-}
+print_year_options(intval(date('Y'))-8,1920);
 ?>
 </select></p>
-<!--<p><select name="element">
-  <option value="none">Select</option>
-  <option value="fire">Fire</option>
-  <option value="water">Water</option>
-  <option value="air">Air</option>
-  <option value="earth">Earth</option>
-  <option value="light">Light</option>
-  <option value="dark">Darkness</option>
-</select></p>
-<p><select name="faction">
-  <option value="none">Select</option>
-  <option value="Fostron">Fostron</option>
-  <option value="Silfar">Silfar</option>
-  <option value="Narnia">Narnia</option>
-  <option value="Norn">Norn</option>
-</select></p>-->
 <input type="submit" value="Create Account" />
 </form> 
 
