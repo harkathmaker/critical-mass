@@ -57,8 +57,8 @@ if(isset($_REQUEST['user'])) {
 	
 	echo '<form name="sendmessage" action="messages.php" method="post">';
 	echo '<input type="hidden" name="user" value="'.$_REQUEST['user'].'" />';
-	echo '<textarea name="text" rows="6" cols="50"></textarea>';
-	echo '<input type="submit" value="Send" />';
+	echo '<textarea class="messageInput" name="text" rows="6" cols="50"></textarea>';
+	echo '<br /><input type="submit" value="Send" />';
 	echo '</form>';
 	
 } else {
@@ -69,15 +69,18 @@ if(isset($_REQUEST['user'])) {
 
 	$users = array();
 
-	echo '<table class="messageList">';
+	echo '<table class="messageList" border="1">';
 	while($row = mysql_fetch_array($result)) {
 		// Find the other person in the conversation
 		$otherId = ($row['Sender'] != $_SESSION['user'] ? $row['Sender'] : $row['Recipient']);
+		$timeRaw = $row['DateSent'];
+		$timestamp = strtotime($timeRaw);
+		$timeSent = date("F j g:i A", $timestamp);
 		if(!in_array($otherId,$users)) {
 			$users[] = $otherId;
 			$correspondent_info = getUserInfo($otherId);
-			echo '<tr><td><a href="messages.php?user='.$otherId.'">'.$correspondent_info['DisplayName'].'('.$otherId.')</a></td></tr>';
-			echo '<tr><td>'.substr($row['Text'],0,50).' ...</td></tr>';
+			echo '<tr><td colspan="2"><a href="messages.php?user='.$otherId.'">'.$correspondent_info['DisplayName'].'('.$otherId.')</a></td></tr>';
+			echo '<tr><td>'.substr($row['Text'],0,50).' ...</td><td>'.$timeSent.'</td></tr>';
 		}
 	}
 	echo '</table>';

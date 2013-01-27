@@ -82,6 +82,8 @@ if($event['MaxNumber'] == NULL or $total_count < $event['MaxNumber']) {
 
 	if($event['Visibility'] == "Public" or (isset($_SESSION['user']) and $event['Creator'] == $_SESSION['user'])) {
 		// User is allowed to invite to this event
+		echo '<button type="button" onClick="expandInvite();">Invite</button>';
+		echo '<div class="invite">';
 		echo '<h3>Invite people to this event</h3>';
 		echo '<p>Enter emails below, separated by commas:</p>';
 		echo '<form action="event-invite.php" method="post">';
@@ -91,6 +93,7 @@ if($event['MaxNumber'] == NULL or $total_count < $event['MaxNumber']) {
 		echo '<textarea name="note" rows="6" cols="50"></textarea><br />';
 		echo '<input type="submit" value="Send Invites" />';
 		echo '</form>';
+		echo '</div>';
 	}
 } else {
 	// The event is full, so no pledging or inviting
@@ -98,6 +101,19 @@ if($event['MaxNumber'] == NULL or $total_count < $event['MaxNumber']) {
 }
 
 mysql_close($con);
+
+?>
+<script type="text/javascript">
+$( document ).ready(function() {
+  $("div.invite").hide();
+});
+function expandInvite() {
+	//alert("Expanding");
+	$("div.invite").slideToggle( 600 );
+}
+</script>
+
+<?
 
 print_footer();
 ?>

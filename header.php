@@ -17,6 +17,7 @@ function print_header($title,$end_manually = false) {
 	echo '<link rel="stylesheet" type="text/css" href="style.css" />'."\n";
 	//echo '<link rel="stylesheet" type="text/css" href="harkathstyle.css" />';
 	echo '<!-- include javascript functions -->'."\n";
+	echo '<script type="text/javascript" src="jquery.js"></script>'."\n";
 	//include("roll.php");
 	if(!$end_manually) {
 		end_header();

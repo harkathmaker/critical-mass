@@ -10,6 +10,7 @@ table.nav td {
 	padding-left: 20px;
 	padding-right: 20px;
 }
+/* Messages between two people */
 table.messages {
 	min-width: 600px;
 	max-width: 900px;
@@ -18,6 +19,18 @@ table.messages {
 table.messages td {
 	max-width:300px;
 }
+/* Input for private messages */
+textarea.messageInput {
+	min-width: 600px;
+	max-width: 900px;
+	margin-right:auto;
+}
+
+/* A user's overall message list */
+table.messageList td {
+	padding-right: 40px;
+}
+
 #aboutMe {
 	margin-right: auto;
 	max-width:400px;

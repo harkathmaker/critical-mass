@@ -6,12 +6,12 @@ $SEARCH_LIMIT = 30;
 // Internal function for printing out the info for matching events.
 // Takes an SQL query row as input.
 function print_event_result($row) {
-	echo "<table border=\"1\"><tr><td><a href=\"event-page.php?id=\$row[EID]\">$row[Name]</a></td><td>$row[Description]</td></tr></table><br />";
+	echo "<table border=\"1\"><tr><td><a href=\"event-page.php?id=$row[EID]\">$row[Name]</a></td><td>$row[Description]</td></tr></table><br />";
 }
 // Internal function for printing out info for a matching user.
 // Takes an SQL query row as input.
 function print_user_result($row) {
-	echo "<table border=\"1\"><tr><td><a href=\"profile.php?user=\$row[UID]\">$row[DisplayName]</a></td><td>$row[AboutMe]</td></tr></table><br />";
+	echo "<table border=\"1\"><tr><td><a href=\"profile.php?user=$row[UID]\">$row[DisplayName]</a></td><td>$row[AboutMe]</td></tr></table><br />";
 }
 
 
